@@ -31,3 +31,9 @@ CREATE TABLE verificacao_email (
         FOREIGN KEY (fk_usuario)
         REFERENCES usuario(id_usuario)
 );
+
+INSERT INTO empresa (razao_social, cnpj, dominio)
+VALUES
+('Tech Solutions LTDA', '12345678000101', 'techsolutions.com.br'),
+('Nexus Sistemas LTDA', '98765432000199', 'nexussistemas.com.br'),
+('Alpha Digital LTDA', '45678912000155', 'alphadigital.com.br');
