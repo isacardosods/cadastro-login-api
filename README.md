@@ -33,16 +33,16 @@ Antes de executar o projeto, tenha instalado:
 
 Clone o repositório e entre na pasta do projeto:
 
-\`\`\`bash
+```bash
 git clone URL_DO_REPOSITORIO
 cd cadastro-login
-\`\`\`
+```
 
 Instale as dependências:
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 ## Configuração do banco de dados
 
@@ -60,7 +60,7 @@ O projeto utiliza variáveis de ambiente para armazenar informações sensíveis
 
 Crie um arquivo chamado `.env` na raiz do projeto:
 
-\`\`\`env
+```env
 DB_USER=seu_usuario_mysql
 DB_HOST=localhost
 DB_DATABASE=cadastro_login
@@ -68,7 +68,7 @@ DB_PASSWORD=sua_senha_mysql
 DB_PORT=3306
 
 RESEND_API_KEY=sua_api_key_resend
-\`\`\`
+```
 
 ### Importante
 
@@ -76,9 +76,9 @@ O arquivo `.env` **não deve ser enviado para o GitHub**, pois contém credencia
 
 Adicione o arquivo ao `.gitignore`:
 
-\`\`\`gitignore
+```gitignore
 .env
-\`\`\`
+```
 
 ## Configuração do Resend
 
@@ -86,9 +86,9 @@ O projeto utiliza o **Resend** para o envio de emails de verificação.
 
 É necessário criar uma conta no [Resend](https://resend.com), gerar uma API Key e utilizá-la na variável:
 
-\`\`\`env
+```env
 RESEND_API_KEY=sua_api_key_resend
-\`\`\`
+```
 
 Após o cadastro de um usuário, o sistema envia um email contendo um link de verificação.
 
@@ -98,21 +98,21 @@ O usuário deve acessar esse link para confirmar o email.
 
 Inicie a aplicação com:
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 A API estará disponível em:
 
-\`\`\`text
+```text
 http://localhost:3000
-\`\`\`
+```
 
 ## Fluxo de autenticação
 
 O processo de autenticação funciona da seguinte maneira:
 
-\`\`\`text
+```text
 Cadastro
    ↓
 Senha armazenada com bcrypt
@@ -123,11 +123,11 @@ Token de verificação gerado
    ↓
 Token armazenado no banco
    ↓
-email enviado pelo Resend
+Email enviado pelo Resend
    ↓
 Usuário acessa o link
    ↓
-email verificado
+Email verificado
    ↓
 verificado = 1
    ↓
@@ -136,18 +136,18 @@ Login
 bcrypt.compare()
    ↓
 Usuário logado com sucesso
-\`\`\`
+```
 
 ## Estrutura do projeto
 
-\`\`\`text
+```text
 src/
 ├── controller/
 ├── model/
 ├── route/
 ├── service/
 └── database/
-\`\`\`
+```
 
 Cada camada possui uma responsabilidade específica:
 
