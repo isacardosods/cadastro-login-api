@@ -1,24 +1,16 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.ETHEREAL_USER,
-        pass: process.env.ETHEREAL_PASSWORD
-    }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function enviarEmail(email, token) {
 
     const link = `http://localhost:3000/api/verificarEmail?token=${token}`;
 
-    const info = await transporter.sendMail({
-        from: '"Cadastro Login" <no-reply@cadastro-login.com>',
-        to: email,
+   const { data, error } = await resend.emails.send({
+        from: 'Autenticação de cadastro <onboarding@resend.dev>', 
+        to: ['isabella.csantos@sptech.school'],
         subject: 'Verifique seu e-mail',
         html: `
             <h2>Verificação de e-mail</h2>
@@ -33,7 +25,14 @@ async function enviarEmail(email, token) {
         `
     });
 
-    console.log('Preview URL:', nodemailer.getTestMessageUrl(info));
+    if (error) {
+        console.error('Erro ao enviar e-mail:', error);
+        throw new Error('Falha ao enviar e-mail de verificação');
+    }
+
+    console.log('E-mail enviado, id:', data.id);
+
+    return data;
 }
 
 export default {

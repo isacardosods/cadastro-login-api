@@ -30,11 +30,11 @@ async function verificarEmail(req, res) {
             });
         }
 
+        await verificacaoModel.excluirToken(token);
+
         await userModel.verificarEmail(
             verificacao.fk_usuario
         );
-
-        await verificacaoModel.excluirToken(token);
 
         return res.status(200).json({
             mensagem: 'E-mail verificado com sucesso'
