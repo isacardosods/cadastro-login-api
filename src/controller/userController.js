@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'; dotenv.config();
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import userModel from '../model/userModel.js';
 import empresaModel from '../model/empresaModel.js';
 import crypto from 'crypto';
@@ -13,9 +12,27 @@ async function cadastrar(req, res) {
             nome,
             email_institucional,
             cpf,
-            dtNascimento,
-            senha
+            senha,
+            confirmacao_senha
         } = req.body;
+
+        const vetor_verificacao = [nome, email_institucional, cpf, senha, confirmacao_senha];
+
+        for (let i = 0; i < vetor_verificacao.length; i++) {
+            if (!vetor_verificacao[i]) {
+                return res.status(400).json({
+                    mensagem: 'Preencha todos os campos corretamente!'
+                });
+            }
+        }
+
+        let regex_email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!regex_email.test(email_institucional)) {
+            return res.status(400).json({
+                mensagem: 'Digite um email válido!'
+            })
+        }
 
         const dominio = email_institucional.split('@')[1];
         const empresa = await empresaModel.buscarDominio(dominio);
@@ -26,13 +43,32 @@ async function cadastrar(req, res) {
             });
         }
 
+        if (cpf.length != 11) {
+            return res.status(400).json({
+                mensagem: 'O CPF deve obrigatoriamente ter 11 dígitos!'
+            })
+        }
+
+        let senha_regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+
+        if (!senha_regex.test(senha)) {
+            return res.status(400).json({
+                mensagem: 'Digite uma senha com ao menos 8 caracteres, uma letra maiúscula, um número e um caractere especial!'
+            })
+        }
+
+        if (senha !== confirmacao_senha) {
+            return res.status(400).json({
+                mensagem: 'Confirmação de senha inválida!'
+            })
+        }
+
         const senhaHash = await bcrypt.hash(senha, 10);
 
         const resultado = await userModel.cadastrar(
             nome,
             email_institucional,
             cpf,
-            dtNascimento,
             senhaHash,
             empresa.id_empresa
         );
@@ -83,7 +119,6 @@ async function buscarPorId(req, res) {
         res.status(200).json(usuario);
 
     } catch (erro) {
-
         console.error(erro);
 
         res.status(500).json({
@@ -118,7 +153,7 @@ async function login(req, res) {
             });
         }
 
-        console.log(usuario);
+        console.log(usuario.id_usuario);
         console.log('verificado:', usuario.verificado);
 
         if (!usuario.verificado) {
@@ -127,20 +162,8 @@ async function login(req, res) {
             });
         }
 
-        const token = jwt.sign(
-            {
-                id_usuario: usuario.id_usuario,
-                fk_empresa: usuario.fk_empresa
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: '24h'
-            }
-        );
-
         return res.status(200).json({
-            mensagem: 'Login realizado com sucesso',
-            token
+            mensagem: 'Login realizado com sucesso'
         });
 
     } catch (erro) {

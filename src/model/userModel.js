@@ -4,20 +4,18 @@ async function cadastrar(
     nome,
     email_institucional,
     cpf,
-    dtNascimento,
     senha,
     fk_empresa
 ) {
 
     const [resultado] = await pool.query(
         `INSERT INTO usuario
-        (nome, email_institucional, cpf, dtNascimento, senha, fk_empresa)
+        (nome, email_institucional, cpf, senha, fk_empresa)
         VALUES (?, ?, ?, ?, ?, ?)`,
         [
             nome,
             email_institucional,
             cpf,
-            dtNascimento,
             senha,
             fk_empresa
         ]
@@ -33,7 +31,6 @@ async function buscarPorId(id) {
             nome,
             email_institucional,
             cpf,
-            dtNascimento,
             verificado,
             fk_empresa
          FROM usuario
