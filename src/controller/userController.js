@@ -43,7 +43,9 @@ async function cadastrar(req, res) {
             });
         }
 
-        if (cpf.length != 11) {
+        let cpf_regex = /^\d{11}$/;
+
+        if (!cpf_regex.test(cpf)) {
             return res.status(400).json({
                 mensagem: 'O CPF deve obrigatoriamente ter 11 dígitos!'
             })
@@ -153,7 +155,7 @@ async function login(req, res) {
             });
         }
 
-        console.log(usuario.id_usuario);
+        console.log('email:', usuario.email_institucional);
         console.log('verificado:', usuario.verificado);
 
         if (!usuario.verificado) {
