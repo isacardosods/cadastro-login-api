@@ -30,14 +30,14 @@ async function verificarEmail(req, res) {
             });
         }
 
+        await verificacaoModel.excluirToken(token);
+
         await userModel.verificarEmail(
             verificacao.fk_usuario
         );
 
-        await verificacaoModel.excluirToken(token);
-
         return res.status(200).json({
-            mensagem: 'E-mail verificado com sucesso'
+            mensagem: 'email verificado com sucesso'
         });
 
     } catch (erro) {
@@ -45,7 +45,7 @@ async function verificarEmail(req, res) {
         console.error(erro);
 
         return res.status(500).json({
-            mensagem: 'Erro ao verificar e-mail'
+            mensagem: 'Erro ao verificar email'
         });
     }
 }

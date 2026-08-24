@@ -140,7 +140,7 @@ async function login(req, res) {
 
         if (!usuario) {
             return res.status(401).json({
-                mensagem: 'E-mail ou senha inválidos'
+                mensagem: 'email ou senha inválidos'
             });
         }
 
@@ -151,7 +151,7 @@ async function login(req, res) {
 
         if (!senhaValida) {
             return res.status(401).json({
-                mensagem: 'E-mail ou senha inválidos'
+                mensagem: 'email ou senha inválidos'
             });
         }
 
@@ -160,7 +160,7 @@ async function login(req, res) {
 
         if (!usuario.verificado) {
             return res.status(403).json({
-                mensagem: 'E-mail ainda não verificado'
+                mensagem: 'email ainda não verificado'
             });
         }
 

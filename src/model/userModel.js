@@ -11,7 +11,7 @@ async function cadastrar(
     const [resultado] = await pool.query(
         `INSERT INTO usuario
         (nome, email_institucional, cpf, senha, fk_empresa)
-        VALUES (?, ?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, ?)`,
         [
             nome,
             email_institucional,
