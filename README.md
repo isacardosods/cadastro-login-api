@@ -1,6 +1,6 @@
 # Cadastro e Login
 
-API de cadastro e autenticação de usuários com **Node.js, Express, MySQL, bcrypt e JWT**, incluindo verificação de e-mail através do **Nodemailer + Ethereal**.
+API de cadastro e autenticação de usuários com **Node.js, Express, MySQL e bcrypt**, incluindo verificação de e-mail através do **Nodemailer + Ethereal**.
 
 ## Tecnologias/Dependências
 
@@ -9,7 +9,6 @@ API de cadastro e autenticação de usuários com **Node.js, Express, MySQL, bcr
 * MySQL
 * mysql2
 * bcrypt
-* JSON Web Token (JWT)
 * Nodemailer
 * Ethereal Email
 * dotenv
@@ -21,7 +20,6 @@ API de cadastro e autenticação de usuários com **Node.js, Express, MySQL, bcr
 * Verificação de e-mail
 * Token de verificação com expiração
 * Login de usuários
-* Autenticação utilizando JWT
 
 ## Pré-requisitos
 
@@ -68,8 +66,6 @@ DB_HOST=localhost
 DB_DATABASE=cadastro_login
 DB_PASSWORD=sua_senha_mysql
 DB_PORT=3306
-
-JWT_SECRET=sua_chave_secreta
 
 ETHEREAL_USER=seu_usuario_ethereal
 ETHEREAL_PASSWORD=sua_senha_ethereal
@@ -143,28 +139,7 @@ Login
    ↓
 bcrypt.compare()
    ↓
-JWT gerado
-   ↓
-Token utilizado nas rotas protegidas
-```
-
-## JWT
-
-Após um login válido, a API gera um token JWT contendo informações necessárias para identificar o usuário e sua empresa.
-
-Exemplo de payload:
-
-```json
-{
-    "id_usuario": 1,
-    "fk_empresa": 1
-}
-```
-
-O token possui tempo de expiração e deve ser enviado nas requisições autenticadas através do header:
-
-```http
-Authorization: Bearer SEU_TOKEN
+Usuário logado com sucesso
 ```
 
 ## Estrutura do projeto
@@ -173,7 +148,6 @@ Authorization: Bearer SEU_TOKEN
 src/
 ├── controller/
 ├── model/
-├── middleware/
 ├── route/
 ├── service/
 └── database/
@@ -184,7 +158,6 @@ Cada camada possui uma responsabilidade específica:
 * **controller:** regras de negócio e tratamento das requisições
 * **model:** comunicação com o banco de dados
 * **route:** definição das rotas da API
-* **middleware:** autenticação e validação do JWT
 * **service:** serviços externos, como envio de e-mails
 * **database:** configuração da conexão com o MySQL
 
