@@ -1,6 +1,6 @@
 # Cadastro e Login
 
-API de cadastro e autenticação de usuários com **Node.js, Express, MySQL e bcrypt**, incluindo verificação de email através do **Nodemailer + Resend**.
+API de cadastro e autenticação de usuários com **Node.js, Express, MySQL e bcrypt**, incluindo verificação de email através do **Resend**.
 
 ## Tecnologias/Dependências
 
@@ -9,7 +9,6 @@ API de cadastro e autenticação de usuários com **Node.js, Express, MySQL e bc
 * MySQL
 * mysql2
 * bcrypt
-* Nodemailer
 * Resend
 * dotenv
 
